@@ -1,5 +1,9 @@
 import cv2 as cv
 
+def changeres(width,height):
+    capture.set(3,width)
+    capture.set(4,height)
+
 #function for resizing
 def resize(frame,scale=0.45):
     height=int(frame.shape[0]*scale)
