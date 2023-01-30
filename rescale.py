@@ -1,38 +1,32 @@
 import cv2 as cv
 
-def changeres(width,height):
-    capture.set(3,width)
-    capture.set(4,height)
 
-#function for resizing
-def resize(frame,scale=0.45):
-    height=int(frame.shape[0]*scale)
-    width=int(frame.shape[1]*scale)
+#rescaling function
+def rescale(img,scale):
+    h=int(img.shape[0]*scale)
+    w=int(img.shape[1]*scale)
+    dim=(w,h)
+    return (cv.resize(img,dim,interpolation=cv.INTER_AREA))
 
-    dimensions=(width,height)
+scale=float(input("Enter the scale you want: "))
 
-    return cv.resize(frame,dimensions,interpolation=cv.INTER_AREA)
-
-#image part
-image=cv.imread('images/cat_large.jpg')
-resized_image=resize(image)
-cv.imshow('image',image)
-cv.imshow('New Image',resized_image)
+#rescaling the image
+#------------------------------------------
+img=cv.imread('images/cat_large.jpg')
+new_img=rescale(img,scale)
+#cv.imshow('cat_large',img)
+cv.imshow('cat_resize',new_img)
 cv.waitKey(0)
 
+#rescaling the video
+#------------------------------------------
+#vid=cv.VideoCapture('videos/dog.mp4')
+#while(1):
+#    isTrue,frame=vid.read()
+#    new_frame=rescale(frame)
+#    cv.imshow('new_video',new_frame)
 
-#video part
-capture=cv.VideoCapture('videos/dog.mp4')
-while True:
-    isTrue, frame=capture.read()
-    frame_resized=resize(frame)
-    #cv.imshow('Video',frame)
-    cv.imshow("Resized Video",frame_resized)
-
-    if(cv.waitKey(20) & 0xFF==ord('d')):
-        break
-
-capture.release()
-cv.destroyAllWindows()
-
-cv.waitKey(0)
+#    if(cv.waitKey(20) & 0xFF==ord('d')):
+#        break
+#vid.release()
+#cv.destroyAllWindows()
